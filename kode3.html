@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Extracellular Vesicle Explainer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .zoomed {
+      transform: scale(1.3) translate(-50%, -50%);
+      z-index: 20;
+    }
+
+    .zoomable {
+      transition: transform 0.3s ease;
+      transform: scale(1) translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body class="m-0 p-0 bg-[#e7edf2] h-screen w-screen overflow-hidden">
+  <div class="flex h-full w-full">
+    <!-- Sidebar -->
+    <aside class="w-80 bg-[#e7edf2] overflow-y-scroll p-4 text-sm text-gray-800 border-r border-gray-300">
+      <h2 class="text-lg font-semibold mb-4">Vesikel</h2>
+      <p class="mb-4">Vesikel adalah organel sel yang sangat penting karena perannya bagi banyak proses biologis.  Ada 5 jenis utama vesikel:</p>
+      <p class="mb-4">  > vesikel pengangkut</p>
+      <p class="mb-4">  > lisosom</p>
+      <p class="mb-4">  > vesikel sekretori</p>
+      <p class="mb-4">  > peroksisom</p>
+      <p class="mb-4">  > vesikel ekstrakurikular</p>
+<br>
+<br>
+      <p>Sumber:</p>
+      <p>https://www.medicalnewstoday.com/articles/vesicle</p>
+      <p>https://mindthegraph.com/illustrations/extracellular-vesicle/</p>
+
+      <br>
+      <br>
+      <br>
+      <p>Kamila |  11-4 | 20</br></p>
+    </aside>
+
+    <!-- Main Visual Area -->
+    <div id="root" class="flex-1 flex items-center justify-center"></div>
+  </div>
+
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <script type="text/javascript">
+    const { useState } = React;
+
+    const points = [
+      { id: 1, label: "Protein Permukaan", detail: "Protein pada permukaan vesikel yang terlibat dalam pengidentifikasian membran target.", x: "70%", y: "25%" },
+      { id: 2, label: "Membran Lipids", detail: "Lipid bilayer yang membentuk struktur luar vesikel.", x: "30%", y: "25%" },
+      { id: 3, label: "Reseptor", detail: "Mengenali sel target, memfasilitasi endositosis, memberi sinyal antar sel, menmberi arah pengiriman muatan.", x: "10%", y: "55%" },
+      { id: 4, label: "Protein", detail: "Protein yang teredar dalam sel. Untuk transportasi, sekresi, dan penyimpanan zat", x: "35%", y: "80%" },
+      { id: 5, label: "Asam Nukleat", detail: "Berisi DNA/RNA yang terbungkus dalam kapsul yang dimana mereka menyimpan kode genetik. ", x: "65%", y: "80%" },
+    ];
+
+    function VesicleExplainer() {
+      const [activeId, setActiveId] = useState(null);
+
+      return React.createElement('div', {
+        className: 'relative w-[450px] h-[385px] flex items-center justify-center',
+      },
+        React.createElement('img', {
+          src: 'https://svg.mindthegraph.com/realistic/extracellular_vesicle/900x772/extracellular_vesicle-04.png',
+          alt: 'Extracellular Vesicle',
+          className: 'w-full h-full object-contain z-0',
+        }),
+        points.map((p) =>
+          React.createElement('div', {
+            key: p.id,
+            onClick: () => setActiveId(activeId === p.id ? null : p.id),
+            className: `absolute cursor-pointer rounded-xl bg-white shadow-md px-3 py-2 w-40 text-xs border border-gray-300 text-center zoomable ${activeId === p.id ? 'zoomed' : ''}`,
+            style: {
+              left: p.x,
+              top: p.y,
+            }
+          },
+            React.createElement('strong', { className: 'block mb-1' }, p.label),
+            activeId === p.id && React.createElement('p', { className: 'text-gray-700 text-xs' }, p.detail)
+          )
+        )
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      React.createElement(VesicleExplainer)
+    );
+  </script>
+</body>
+</html>
